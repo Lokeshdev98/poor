@@ -2,15 +2,6 @@ import streamlit as st
 import os
 from datetime import datetime
 
-# Configure MySQL connection
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",  # Change if your MySQL user is different
-    password="",  # Add password if set
-    database="donations_db"
-)
-cursor = db.cursor()
-
 # Set upload folder
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -37,7 +28,6 @@ with st.form(key='donation_form'):
             query = "INSERT INTO donations (name, email, payment_file, created_at) VALUES (%s, %s, %s, %s)"
             values = (name, email, uploaded_file.name, datetime.now())
             cursor.execute(query, values)
-            db.commit()
 
             st.success("🎉 Submission Successful!")
         else:
